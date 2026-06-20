@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand & Scam Protection | CreatorShield AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .protection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .scam-item, .account-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .item-info h4 {
+            margin-bottom: 8px;
+            color: var(--blue);
+        }
+
+        .item-info p {
+            font-size: 0.85rem;
+            color: var(--text2);
+            line-height: 1.5;
+        }
+
+        .risk-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .risk-tag.critical { background: var(--pink); color: white; }
+        .risk-tag.warning { background: var(--purple); color: white; }
+
+        .search-box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .search-box input {
+            padding-left: 50px;
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 992px) {
+            .protection-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">🛡 CreatorShield AI</a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="content-protection.html">Content Theft</a></li>
+            <li><a href="deepfake-monitor.html">Deepfake</a></li>
+            <li><a href="brand-scam-protection.html" class="active">Scam Protection</a></li>
+        </ul>
+        <a href="dashboard.html" class="nav-btn">Start Monitoring</a>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Brand & <span>Scam Protection</span></h1>
+            <p>Shield your community from impersonators, fake giveaways, and fraudulent campaigns using your name and likeness.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="search-box card fade-in">
+            <label style="display: block; margin-bottom: 10px; color: var(--text2);">Search for active impersonation attempts or scan a specific account/link:</label>
+            <div style="display: flex; gap: 15px;">
+                <input type="text" id="protection-query" placeholder="Enter username, account link, or suspicious text..." style="flex: 1;">
+                <button class="primary-btn" id="analyze-btn">Analyze Threat</button>
+            </div>
+        </div>
+
+        <div class="protection-grid">
+            <div class="card fade-in" style="animation-delay: 0.1s;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <h3>Impersonation Detection</h3>
+                    <div class="badge badge-risk-medium">6 Clone Profiles</div>
+                </div>
+
+                <div id="impersonation-list">
+                    <div class="account-item">
+                        <div class="item-info">
+                            <h4>@yourname_official_giveaways</h4>
+                            <p>Platform: Instagram · 92% Name Similarity</p>
+                            <p>Behavior: Direct Messaging followers with links.</p>
+                        </div>
+                        <div class="risk-tag critical">CRITICAL</div>
+                    </div>
+                    <div class="account-item">
+                        <div class="item-info">
+                            <h4>@yourname_suppport_real</h4>
+                            <p>Platform: X / Twitter · 85% Name Similarity</p>
+                            <p>Behavior: Asking for wallet addresses in threads.</p>
+                        </div>
+                        <div class="risk-tag warning">WARNING</div>
+                    </div>
+                    <div class="account-item">
+                        <div class="item-info">
+                            <h4>yourname.verified.cc</h4>
+                            <p>Platform: Web Domain · Typosquatting</p>
+                            <p>Behavior: Phishing landing page detected.</p>
+                        </div>
+                        <div class="risk-tag critical">CRITICAL</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in" style="animation-delay: 0.2s;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <h3>Scam Campaign Alerts</h3>
+                    <div class="badge badge-risk-high">2 Active Scams</div>
+                </div>
+
+                <div id="scam-list">
+                    <div class="scam-item">
+                        <div class="item-info">
+                            <h4>Fake $5,000 Giveaway</h4>
+                            <p>Detected in: Facebook Ads, Telegram</p>
+                            <p>Mechanism: Requires $10 "verification fee" via crypto.</p>
+                        </div>
+                        <div class="risk-tag critical">SCAM</div>
+                    </div>
+                    <div class="scam-item">
+                        <div class="item-info">
+                            <h4>Exclusive Masterclass Early Bird</h4>
+                            <p>Detected in: Instagram Stories (Sponsered)</p>
+                            <p>Mechanism: Unauthorized use of your 2024 course visuals.</p>
+                        </div>
+                        <div class="risk-tag warning">FRAUD</div>
+                    </div>
+                </div>
+
+                <div id="ai-scam-analysis" style="margin-top: 25px; padding: 20px; background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 12px; display: none;">
+                    <h4 style="color: var(--blue); margin-bottom: 10px;">AI Threat Assessment</h4>
+                    <p id="scam-explanation-text" style="font-size: 0.85rem; line-height: 1.6;"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h3>CreatorShield AI</h3>
+            <p>Protecting the Future of the Creator Economy.</p>
+        </div>
+    </footer>
+
+    <script src="js/ai-config.js"></script>
+    <script src="js/brand-protection.js"></script>
+</body>
+</html>

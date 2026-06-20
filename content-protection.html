@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Protection | CreatorShield AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .scanner-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .input-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .results-card {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .results-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text2);
+            text-align: center;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 8, 22, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+            border-radius: 28px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 212, 255, 0.1);
+            border-top-color: var(--blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .fingerprint-item {
+            padding: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(0, 212, 255, 0.05);
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 992px) {
+            .scanner-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">🛡 CreatorShield AI</a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="content-protection.html" class="active">Content Theft</a></li>
+            <li><a href="deepfake-monitor.html">Deepfake</a></li>
+            <li><a href="brand-scam-protection.html">Scam Protection</a></li>
+        </ul>
+        <a href="dashboard.html" class="nav-btn">Start Monitoring</a>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Content <span>Protection</span></h1>
+            <p>Detect stolen content and unauthorized reuploads across all major social platforms using AI fingerprinting.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="scanner-grid">
+            <div class="card input-card fade-in">
+                <h3>Submit Profile Links</h3>
+                <p style="color: var(--text2); margin-bottom: 10px;">Paste your official profile URLs to index your content and start monitoring.</p>
+                
+                <div class="input-group">
+                    <label>Instagram Profile URL</label>
+                    <input type="url" id="insta-url" placeholder="https://instagram.com/yourprofile">
+                </div>
+                
+                <div class="input-group">
+                    <label>YouTube Channel URL</label>
+                    <input type="url" id="yt-url" placeholder="https://youtube.com/@yourchannel">
+                </div>
+                
+                <div class="input-group">
+                    <label>X / Twitter Profile URL</label>
+                    <input type="url" id="x-url" placeholder="https://x.com/yourprofile">
+                </div>
+
+                <button class="primary-btn" id="start-scan-btn">Index & Scan Content</button>
+            </div>
+
+            <div class="card results-card fade-in" id="results-panel" style="animation-delay: 0.2s;">
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="spinner"></div>
+                    <h4 id="status-text">Indexing public content...</h4>
+                </div>
+
+                <h3>Scan Results</h3>
+                <div id="results-container" class="results-empty">
+                    <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;">🔍</div>
+                    <p>No scans performed yet.</p>
+                    <p style="font-size: 0.8rem;">Enter your profile links to start detecting stolen content.</p>
+                </div>
+            </div>
+        </div>
+
+        <section id="theft-cases" style="display: none; padding: 40px 0;">
+            <div class="card fade-in">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3>Theft Cases List</h3>
+                    <button class="secondary-btn" id="download-report">Download Evidence Report</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Account</th>
+                                <th>Similarity</th>
+                                <th>Credit Given</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="theft-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="ai-explanation" style="margin-top: 30px; padding: 20px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; display: none;">
+                    <h4 style="color: var(--purple); margin-bottom: 10px;">AI Similarity Analysis</h4>
+                    <p id="explanation-text" style="font-size: 0.9rem; line-height: 1.6;"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h3>CreatorShield AI</h3>
+            <p>Protecting the Future of the Creator Economy.</p>
+        </div>
+    </footer>
+
+    <script src="js/ai-config.js"></script>
+    <script src="js/content-protection.js"></script>
+</body>
+</html>

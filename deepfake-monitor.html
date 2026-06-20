@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Monitor | CreatorShield AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .monitor-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .identity-card {
+            height: fit-content;
+        }
+
+        .threat-timeline {
+            margin-top: 30px;
+            padding: 20px;
+            border-left: 2px dashed rgba(255, 79, 216, 0.3);
+            margin-left: 20px;
+        }
+
+        .timeline-event {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+
+        .timeline-event::before {
+            content: "";
+            position: absolute;
+            left: -11px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--bg);
+            border: 3px solid var(--pink);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--pink);
+        }
+
+        .event-date {
+            font-size: 0.8rem;
+            color: var(--pink);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .event-details {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .risk-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .risk-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--pink));
+            width: 0%;
+            transition: 1.5s ease-out;
+        }
+
+        @media (max-width: 992px) {
+            .monitor-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">🛡 CreatorShield AI</a>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="content-protection.html">Content Theft</a></li>
+            <li><a href="deepfake-monitor.html" class="active">Deepfake</a></li>
+            <li><a href="brand-scam-protection.html">Scam Protection</a></li>
+        </ul>
+        <a href="dashboard.html" class="nav-btn">Start Monitoring</a>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Deepfake <span>Monitor</span></h1>
+            <p>Advanced AI surveillance to protect your face and voice from unauthorized deepfake synthesis and exploitation.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="monitor-layout">
+            <div class="card identity-card fade-in">
+                <h3>Identity Profile</h3>
+                <p style="color: var(--text2); margin-bottom: 20px; font-size: 0.9rem;">AI uses these links to create your biometric identity profile for cross-platform scanning.</p>
+                
+                <div class="input-group">
+                    <label>Reference Profile URL</label>
+                    <input type="url" id="ref-url" placeholder="https://instagram.com/your_official">
+                </div>
+                
+                <div class="input-group">
+                    <label>Voice Reference (Optional)</label>
+                    <input type="url" id="voice-url" placeholder="Link to a clean audio sample">
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                        <span>Detection Sensitivity</span>
+                        <span>High</span>
+                    </div>
+                    <div class="risk-meter">
+                        <div class="risk-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <button class="primary-btn" id="activate-monitor" style="width: 100%;">Activate Identity Shield</button>
+            </div>
+
+            <div class="card fade-in" style="animation-delay: 0.2s;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3>Suspicious Content Detected</h3>
+                    <div class="badge badge-risk-high" id="alert-count">0 Alerts</div>
+                </div>
+
+                <div id="no-deepfakes" style="text-align: center; padding: 60px 20px; color: var(--text2);">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">👤</div>
+                    <p>No active deepfake threats detected for your profile.</p>
+                    <p style="font-size: 0.8rem;">Shield is active and scanning 1,400+ sources per minute.</p>
+                </div>
+
+                <div id="deepfake-list" style="display: none;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Source Link</th>
+                                <th>Conf. Score</th>
+                                <th>Risk Level</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deepfake-tbody"></tbody>
+                    </table>
+
+                    <div class="threat-timeline">
+                        <h4 style="margin-bottom: 20px;">Identity Threat Timeline</h4>
+                        <div id="timeline-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h3>CreatorShield AI</h3>
+            <p>Protecting the Future of the Creator Economy.</p>
+        </div>
+    </footer>
+
+    <script src="js/ai-config.js"></script>
+    <script src="js/deepfake-monitor.js"></script>
+</body>
+</html>
